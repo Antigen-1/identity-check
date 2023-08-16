@@ -1,3 +1,3 @@
 identity-check
 ==============
-README text here.
+Verify Chinese ID number.

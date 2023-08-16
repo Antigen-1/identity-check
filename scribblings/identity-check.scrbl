@@ -7,4 +7,4 @@
 
 @defmodule[identity-check]
 
-Package Description Here
+Verify Chinese ID number.
