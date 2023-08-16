@@ -57,7 +57,7 @@
 (define (invert v)
   (let/cc return
     (for ((n (in-naturals)))
-      (cond ((= 1 (remainder (* n v) 11)) (return n))))))
+      (cond ((= 1 (remainder (* n v) base)) (return n))))))
 
 (define (plain-valid-identity? str . others)
   (define (vector-of-valid-integers? vec)
@@ -88,7 +88,7 @@
           (lambda (int-vector)
             (let* ((product-vector (vector-mul int-vector weight-vector))
                    (sum (- (vector-sum product-vector) (vector-ref product-vector i))))
-              (n:integer->char (modulo (* (- 1 sum) (vector-ref inverted-weight-vector i)) 11))))))
+              (n:integer->char (modulo (* (- 1 sum) (vector-ref inverted-weight-vector i)) base))))))
         (else (error 'identity "Identity string ~s is invalid because it has incorrect length or contains invalid characters" identity))))
 
 (require racket/contract racket/vector)
