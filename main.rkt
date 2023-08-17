@@ -82,7 +82,7 @@
 ;;exported functions
 (define (valid-identity? str . others)
   (apply plain-valid-identity? str (lambda (int-vector) (= 1 (modulo (vector-sum (vector-mul int-vector weight-vector)) base))) others))
-(define (correct-invalid-slot1 identity i)
+(define (correct-slot1 identity i)
   (cond ((plain-valid-identity?
           identity
           (lambda (int-vector)
@@ -93,12 +93,12 @@
 
 (require racket/contract racket/vector)
 (provide (contract-out (valid-identity? (-> string? (-> any/c boolean?) ... any))
-                       (correct-invalid-slot1 (-> string? (and/c exact-nonnegative-integer? (lambda (index) (< index 18))) any))))
+                       (correct-slot1 (-> string? (and/c exact-nonnegative-integer? (lambda (index) (< index 18))) any))))
 
 (module* test racket/base
   (require racket/vector rackunit (submod ".."))
 
   (check-true (valid-identity? "11010519491231002X" (lambda (vec) (equal? (vector-immutable 1 9 4 9) (vector-copy vec 6 10)))))
   (check-false (valid-identity? "110105194912310020"))
-  (check-true (char-ci=? #\X (correct-invalid-slot1 "110105194912310020" 17)))
-  (check-exn exn:fail? (lambda () (correct-invalid-slot1 "11010519491231002" 17))))
+  (check-true (char-ci=? #\X (correct-slot1 "110105194912310020" 17)))
+  (check-exn exn:fail? (lambda () (correct-slot1 "11010519491231002" 17))))
